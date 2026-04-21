@@ -1,0 +1,10 @@
+__pycache__/
+.pytest_cache/
+.venv/
+.env
+.git/
+
+mssql_data/
+reports/figures/
+
+datos_abiertos_vigilancia_dengue_2000_2024.csv

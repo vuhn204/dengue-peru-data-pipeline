@@ -1,0 +1,33 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: dengue_sqlserver
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: Developer
+      MSSQL_SA_PASSWORD: ${SQLSERVER_PASSWORD:-DenguePass_2026!}
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+
+  app:
+    build: .
+    container_name: dengue_pipeline
+    depends_on:
+      - sqlserver
+    environment:
+      SQLSERVER_DB: ${SQLSERVER_DB:-dengue_peru}
+      SQLSERVER_USER: ${SQLSERVER_USER:-sa}
+      SQLSERVER_PASSWORD: ${SQLSERVER_PASSWORD:-DenguePass_2026!}
+      SQLSERVER_HOST: sqlserver
+      SQLSERVER_PORT: 1433
+      SQLSERVER_DRIVER: ${SQLSERVER_DRIVER:-ODBC Driver 18 for SQL Server}
+      CSV_PATH: /app/datos_abiertos_vigilancia_dengue_2000_2024.csv
+      CHUNK_SIZE: ${CHUNK_SIZE:-50000}
+    volumes:
+      - ./:/app
+    command: ["python", "main.py", "run-all"]
+
+volumes:
+  mssql_data:
