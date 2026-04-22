@@ -29,20 +29,26 @@ class Settings:
     reports_dir: Path = PROJECT_ROOT / "reports"
     sql_dir: Path = PROJECT_ROOT / "sql"
 
+    def _build_odbc_connect_string(self, database: str) -> str:
+        return (
+            f"DRIVER={{{self.sqlserver_driver}}};"
+            f"SERVER={self.sqlserver_host},{self.sqlserver_port};"
+            f"DATABASE={database};"
+            f"UID={self.sqlserver_user};"
+            f"PWD={self.sqlserver_password};"
+            "Encrypt=yes;"
+            "TrustServerCertificate=yes;"
+        )
+
     @property
     def database_url(self) -> str:
         return str(
             URL.create(
                 "mssql+pyodbc",
-                username=self.sqlserver_user,
-                password=self.sqlserver_password,
-                host=self.sqlserver_host,
-                port=self.sqlserver_port,
-                database=self.sqlserver_db,
                 query={
-                    "driver": self.sqlserver_driver,
-                    "TrustServerCertificate": "yes",
-                    "Encrypt": "yes",
+                    "odbc_connect": self._build_odbc_connect_string(
+                        self.sqlserver_db
+                    )
                 },
             )
         )
@@ -52,15 +58,8 @@ class Settings:
         return str(
             URL.create(
                 "mssql+pyodbc",
-                username=self.sqlserver_user,
-                password=self.sqlserver_password,
-                host=self.sqlserver_host,
-                port=self.sqlserver_port,
-                database="master",
                 query={
-                    "driver": self.sqlserver_driver,
-                    "TrustServerCertificate": "yes",
-                    "Encrypt": "yes",
+                    "odbc_connect": self._build_odbc_connect_string("master")
                 },
             )
         )
