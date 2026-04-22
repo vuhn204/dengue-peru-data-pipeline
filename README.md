@@ -137,12 +137,6 @@ En ese caso, ajusta `.env` segun corresponda. Por ejemplo:
 - Que proporcion corresponde a cuadros graves o con signos de alarma
 - Como se distribuyen los casos por sexo y edad aproximada
 
-## Como venderlo en CV
-
-Puedes resumirlo asi:
-
-> Construi un pipeline de analisis epidemiologico con Python, SQL Server y Docker Engine usando mas de 1 millon de registros publicos del MINSA para limpiar, modelar y analizar casos de dengue por semana y departamento en el Peru.
-
 ## Proximas mejoras
 
 - dashboard con Streamlit
