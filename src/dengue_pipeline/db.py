@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pandas as pd
 from sqlalchemy import create_engine
-from sqlalchemy.exc import OperationalError
+from sqlalchemy.exc import DBAPIError
 from sqlalchemy.engine import Engine
 
 from dengue_pipeline.config import Settings
@@ -48,14 +48,14 @@ def ensure_database_exists(settings: Settings) -> None:
         admin_engine.dispose()
 
 
-def wait_for_engine(engine: Engine, attempts: int = 30, delay_seconds: int = 4) -> Engine:
+def wait_for_engine(engine: Engine, attempts: int = 60, delay_seconds: int = 5) -> Engine:
     last_error: Exception | None = None
     for attempt in range(1, attempts + 1):
         try:
             with engine.connect():
                 print(f"[db] conexion disponible en intento {attempt}")
                 return engine
-        except OperationalError as error:
+        except DBAPIError as error:
             last_error = error
             print(f"[db] esperando SQL Server (intento {attempt}/{attempts})...")
             time.sleep(delay_seconds)

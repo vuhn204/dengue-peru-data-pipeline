@@ -6,6 +6,12 @@ services:
       ACCEPT_EULA: "Y"
       MSSQL_PID: Developer
       MSSQL_SA_PASSWORD: ${SQLSERVER_PASSWORD:-DenguePass_2026!}
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/1433'"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
     ports:
       - "1433:1433"
     volumes:
@@ -15,7 +21,8 @@ services:
     build: .
     container_name: dengue_pipeline
     depends_on:
-      - sqlserver
+      sqlserver:
+        condition: service_healthy
     environment:
       SQLSERVER_DB: ${SQLSERVER_DB:-dengue_peru}
       SQLSERVER_USER: ${SQLSERVER_USER:-sa}
