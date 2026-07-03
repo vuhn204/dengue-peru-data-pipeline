@@ -27,7 +27,12 @@ def export_top_departments(engine: Engine, figures_dir: Path) -> pd.DataFrame:
 
     plt.figure(figsize=(10, 6))
     sns.barplot(data=top_departments, x="total_cases", y="department", palette="viridis")
-    plt.title("Top 10 departamentos con mas casos historicos de dengue")
+
+    ax = plt.gca()
+    for container in ax.containers:
+        ax.bar_label(container, fmt="{:,.0f}", padding=3)
+    
+    plt.title("Top 10 departamentos con más casos históricos de dengue")
     plt.xlabel("Casos acumulados")
     plt.ylabel("Departamento")
     plt.tight_layout()
@@ -66,8 +71,8 @@ def export_latest_year_trend(engine: Engine, figures_dir: Path) -> pd.DataFrame:
         hue="department",
         linewidth=2,
     )
-    plt.title(f"Evolucion semanal del dengue en {latest_year} (top 5 departamentos)")
-    plt.xlabel("Semana epidemiologica")
+    plt.title(f"Evolución semanal del dengue en {latest_year} (top 5 departamentos)")
+    plt.xlabel("Semana epidemiológica")
     plt.ylabel("Casos")
     plt.tight_layout()
     plt.savefig(figures_dir / "latest_year_top5_trend.png", dpi=200)
@@ -90,7 +95,12 @@ def export_severity_mix(engine: Engine, figures_dir: Path) -> pd.DataFrame:
 
     plt.figure(figsize=(8, 5))
     sns.barplot(data=severity_long, x="severity", y="cases", palette="magma")
-    plt.title("Distribucion historica por severidad")
+
+    ax = plt.gca()
+    for container in ax.containers:
+        ax.bar_label(container, fmt="{:,.0f}", padding=3)
+
+    plt.title("Distribución histórica por severidad")
     plt.xlabel("Severidad")
     plt.ylabel("Casos")
     plt.tight_layout()

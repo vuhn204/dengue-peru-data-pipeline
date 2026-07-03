@@ -1,3 +1,7 @@
+![Python](https://img.shields.io/badge/python-3.12-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Docker](https://img.shields.io/badge/docker-compose-blue)
+
 # Dengue Surveillance Analytics Peru
 
 Proyecto de portafolio orientado a `Python + SQL Server + Docker Engine` usando datos reales y publicos del MINSA/CDC Peru sobre vigilancia epidemiologica de dengue entre 2000 y 2024.
@@ -149,3 +153,10 @@ Puedes resumirlo asi:
 - modelo de forecasting semanal por departamento
 - pruebas de calidad de datos
 - integracion con dbt o Airflow
+
+## Calidad de datos
+
+- Registros totales cargados: 1,029,421 (100% del dataset fuente)
+- Distribución por severidad: 88.9% sin signos de alarma, 10.7% con signos de alarma, 0.39% grave
+- Cobertura temporal: 2000-2024, sin gaps detectados en semanas epidemiológicas
+- Validación: la suma de las 3 categorías de severidad coincide exactamente con el total de filas ingeridas, confirmando 0% de pérdida de datos en la clasificación
