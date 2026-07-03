@@ -154,3 +154,11 @@ En ese caso, ajusta `.env` segun corresponda. Por ejemplo:
 - Distribución por severidad: 88.9% sin signos de alarma, 10.7% con signos de alarma, 0.39% grave
 - Cobertura temporal: 2000-2024, sin gaps detectados en semanas epidemiológicas
 - Validación: la suma de las 3 categorías de severidad coincide exactamente con el total de filas ingeridas, confirmando 0% de pérdida de datos en la clasificación
+
+## Resultados
+
+![Top 10 departamentos con más casos históricos](docs/screenshots/top_departments_total_cases.png)
+
+![Evolución semanal del dengue - top 5 departamentos](docs/screenshots/latest_year_top5_trend.png)
+
+![Distribución histórica por severidad](docs/screenshots/severity_mix.png)
